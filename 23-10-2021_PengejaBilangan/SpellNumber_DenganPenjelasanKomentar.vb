@@ -15,7 +15,7 @@ Function PengejaBilangan(angka As Long) As String
     'Array adalah tipe data seperti kontainer
     'Misalkan kontainer apel, maka di dalamnya pasti apel semua
     'Dalam kasus ini, numbers berisi tipe data String
-    'anggota / elemen pada array dapat di akses menggunakan syntax:
+    'anggota / elemen pada array dapat di akses menggunakan syntangka_input:
     '       nama_array(index)
     '
     'dimana index adalah angka yang telah didefinisikan sebelumnya
@@ -76,12 +76,40 @@ Function PengejaBilangan(angka As Long) As String
     
     
     'PROSEDUR EKSTRAKSI ANGKA
-    nilai = Right("000", 3 - panjang) + Trim(Str(angka))
+    'Pertama, kita buat sebuah variabel awal sebagai patokan
+    'Karena kita ingin membagi angka input an kita menjadi grup 3 angka (seperti pemisahan titik pada mata uang),
+    'Kita gunakan fungsi Right(), untuk membuat
+    nilai = Right("000", 3 - panjang_angka) + Trim(Str(angka))
     For y = 3 To 1 Step -1
         angka_input(y) = Mid(nilai, y, 1)
     Next y
     
+    Select Case angka_input(1)
+        Case Is = 1
+          Temp = "SERATUS "
+        Case Is > 1
+          Temp = numbers(Val(angka_input(1))) + "" + "RATUS "
+        Case Else
+          Temp = ""
+    End Select
+ 
+    Select Case angka_input(2)
+      Case Is = 0
+          Temp = Temp + numbers(Val(angka_input(3)))
+      Case Is = 1
+          Select Case angka_input(3)
+            Case Is = 1
+              Temp = Temp + "sebelas"
+            Case Is = 0
+              Temp = Temp + "sepuluh"
+            Case Else
+              Temp = Temp + numbers(Val(angka_input(3))) + " belas"
+          End Select
+      Case Is > 1
+          Temp = Temp + numbers(Val(angka_input(2))) + "puluh"
+          Temp = Temp + " " + numbers(Val(angka_input(3)))
+      End Select
     
-    PengejaBilangan = "Panjang angka = " & panjang_angka
+    PengejaBilangan = Temp
     
 End Function
